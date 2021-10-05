@@ -1,0 +1,160 @@
+import numpy as np
+import cv2
+from grab_screen import grab_screen
+import pyautogui
+import time
+from Keys import PressKey, ReleaseKey , I, ESCAPE
+SW, SH = pyautogui.size()
+time.sleep(1)
+
+def SW_SH_cals(my_x_pos,my_y_pos):
+    ratiox=my_x_pos/1920
+    ratioy=my_y_pos/1080
+    wherex=round(ratiox*SW)
+    wherey=round(ratioy*SH)
+    return wherex, wherey
+
+
+def click(x,y):
+    x,y = SW_SH_cals(x,y)
+    pyautogui.moveTo(x,y)
+    pyautogui.mouseDown()
+    pyautogui.mouseUp()
+    time.sleep(0.1)
+
+
+def press(Key):
+    PressKey(Key)
+    ReleaseKey(Key)
+    time.sleep(0.1)
+
+  
+def match_templat(where,what,threshold):
+    res = cv2.matchTemplate(where,what,cv2.TM_CCOEFF_NORMED)
+    loc = np.where( res >= threshold)
+    '''
+    whereRGB=cv2.cvtColor(where,cv2.COLOR_GRAY2RGB)
+    w1, h1 = what.shape[::-1]
+    for pt1 in zip(*loc[::-1]):
+            cv2.rectangle(whereRGB, pt1, (pt1[0] + w1, pt1[1] + h1), (0,0,255), 2)
+    cv2.imshow('matches',whereRGB)
+    print(loc)
+    '''
+    y=loc[1]
+    x=loc[0]
+    return x,y
+
+
+def check_if_real(list_cords,threshold):
+    if len(list_cords) > 1:
+        difference=list_cords[1]-list_cords[0]    
+        if difference > threshold:
+           return list_cords
+        elif difference < threshold:
+            list_cordsc=list_cords.tolist()
+            #print(list_cordsc)
+            list_cordsc.remove(list_cordsc[1])
+            #print("list_cordsc in check_if_real "+str(list_cordsc))
+            return list_cordsc
+    else:
+        list_cordsc=list_cords.tolist()
+        return list_cordsc
+
+
+#print(SW, SH)
+if SW == 1920 and SH == 1080:
+    inv0=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\0_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv1=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\1_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv2=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\2_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv3=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\3_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv4=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\4_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv5=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\5_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv6=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\6_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv7=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\7_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv8=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\8_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv9=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\9_on_inv.png'),cv2.COLOR_RGB2GRAY)
+
+else:
+    print('You will likely need to take screan shoots of the numbers on your screen resoltion')
+    print('If you do could you send them to me on discord(qmqnrqsU#0335) so I can add them to this if stament would be great')
+
+
+def read_numbers(region):
+    screenRGB=grab_screen(region)
+    screen=cv2.cvtColor(screenRGB, cv2.COLOR_RGB2GRAY)
+    _,x0=match_templat(screen,inv0,0.93)
+    _,x1=match_templat(screen,inv1,0.93)
+    _,x2=match_templat(screen,inv2,0.93)
+    _,x3=match_templat(screen,inv3,0.93)
+    _,x4=match_templat(screen,inv4,0.93)
+    _,x5=match_templat(screen,inv5,0.93)
+    _,x6=match_templat(screen,inv6,0.93)
+    _,x7=match_templat(screen,inv7,0.93)
+    _,x8=match_templat(screen,inv8,0.93)
+    _,x9=match_templat(screen,inv9,0.93)
+    #num_of_num=x0.size+x1.size+x2.size+x3.size+x4.size+x5.size+x6.size+x7.size+x8.size+x9.size
+    nums=[]
+    threshold,_=SW_SH_cals(15,100)
+    x01=check_if_real(x0,threshold)
+    x1l=check_if_real(x1,threshold)
+    x2l=check_if_real(x2,threshold)
+    x3l=check_if_real(x3,threshold)
+    x4l=check_if_real(x4,threshold)
+    x5l=check_if_real(x5,threshold)
+    x6l=check_if_real(x6,threshold)
+    x7l=check_if_real(x7,threshold)
+    x8l=check_if_real(x8,threshold)
+    x9l=check_if_real(x9,threshold)
+    
+    
+    if x0.size!=0:
+        nums.append([x0l,0])
+    if x1.size!=0:
+        nums.append([x1l,1])
+    if x2.size!=0:
+        nums.append([x2l,2])
+    if x3.size!=0:
+        nums.append([x3l,3])
+    if x4.size!=0:
+        nums.append([x4l,4])
+    if x5.size!=0:
+        nums.append([x5l,5])
+    if x6.size!=0:
+        nums.append([x6l,6])
+    if x7.size!=0:
+        nums.append([x7l,7])
+    if x8.size!=0:
+        nums.append([x8l,8])
+    if x9.size!=0:
+        nums.append([x9l,9])
+    nums.sort()
+    #print(len(nums[0][0]))
+    #print(len(nums))
+    num_of_num=0
+    for h in range(len(nums)):
+        num_of_num+=len(nums[h][0])
+    print(num_of_num)
+    print(nums)
+    
+       
+
+def read_region(where,what):
+    if where == 'Worship':
+        press(ESCAPE)
+        press(I)
+        click(637,137)
+        click(688,552)
+        if what == 'Charge Rate':
+            x1,y1=SW_SH_cals(615,529)
+            x2,y2=SW_SH_cals(678,563)
+            region=[x1,y1,x2,y2]
+            read_numbers(region)
+        elif what == 'Cur Charge':
+            x1,y1=SW_SH_cals(631,628)
+            x2,y2=SW_SH_cals(686,658)
+            region=[x1,y1,x2,y2]
+            read_numbers(region)
+
+
+
+read_region('W Charge Rate')
