@@ -1,0 +1,45 @@
+import numpy as np
+import cv2
+import time
+import pyautogui
+
+
+
+def color_lines(original_image,lower,upper,threshold1,threshold2):
+    image = original_image
+    processed_img = original_image
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    maskr = cv2.inRange(hsv, lower, upper)
+    processed_img = cv2.bitwise_and(processed_img,processed_img, mask =maskr)
+    processed_img =  cv2.Canny(processed_img, threshold1, threshold2)
+    return processed_img
+    
+
+def colorfind(image_BGR, HSVCOLOR_lower, HSVCOLOR_upper):
+    hsv = cv2.cvtColor(image_BGR, cv2.COLOR_BGR2HSV)
+    mask = cv2.inRange(hsv, HSVCOLOR_lower, HSVCOLOR_upper)
+    processed_color = cv2.bitwise_and(image,image, mask=mask)
+    return processed_color
+
+
+def SW_SH_cals(my_x_pos,my_y_pos):
+    SW, SH = pyautogui.size()
+    ratiox=my_x_pos/1920
+    ratioy=my_y_pos/1080
+    wherex=round(ratiox*SW)
+    wherey=round(ratioy*SH)
+    return wherex, wherey
+
+
+def click(x,y,delay=0.1):
+    xr,yr = SW_SH_cals(x,y)
+    pyautogui.moveTo(xr,yr)
+    pyautogui.mouseDown()
+    pyautogui.mouseUp()
+    time.sleep(delay)
+
+
+def press(Key):
+    PressKey(Key)
+    ReleaseKey(Key)
+    time.sleep(0.1)
