@@ -38,6 +38,16 @@ def key_check():
         return 'L'
     elif 'M' in keys:
         return 'M'
+    elif 'O' in keys:
+        return 'O'
+    elif 'P' in keys:
+        return 'P'
+    elif 'Q' in keys:
+        return 'Q'
+    elif 'R' in keys:
+        return 'R'
+    elif 'S' in keys:
+        return 'S'
     '''
     elif 'G' in keys:
         return 'G'
@@ -61,15 +71,4 @@ def key_check():
         return 'G'
     elif 'G' in keys:
         return 'G'
-    elif 'G' in keys:
-        return 'G'
-    elif 'G' in keys:
-        return 'G'
-    elif 'G' in keys:
-        return 'G'
-    elif 'G' in keys:
-        return 'G'
-    elif 'G' in keys:
-        return 'G'
-
     '''
