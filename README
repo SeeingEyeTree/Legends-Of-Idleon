@@ -1,10 +1,12 @@
 '''
+You need to have python 3 installed
+Runing the start up file should take your charter to a set loaction and then take a screen shoot of your guild tage so that the player can be found latter.
+pip3 install numpy, cv2, pyautogui, PyQt5. I used these libares to build by programs. 
 This is meant to be a complation of simple idlon funcntions that will improve qol. 
 So far I have made something to buy things from all shops needs impovement to make it more modular for.
 I also have something to kill the world 2 bose in a spiced number of loops as mestro. Kills with zero chance of death and colects all items at the end. Cheeks if invator is full
 and if it is uses telcontics sotrage
 
 
-You will need to add a screen shoust of your guild tage so that the program can find your charctor.
 '''
 
