@@ -63,16 +63,16 @@ def check_if_real(list_cords,threshold):
 
 #print(SW, SH)
 if SW == 1920 and SH == 1080:
-    inv0=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\0_on_inv.png'),cv2.COLOR_RGB2GRAY)
-    inv1=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\1_on_inv.png'),cv2.COLOR_RGB2GRAY)
-    inv2=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\2_on_inv.png'),cv2.COLOR_RGB2GRAY)
-    inv3=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\3_on_inv.png'),cv2.COLOR_RGB2GRAY)
-    inv4=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\4_on_inv.png'),cv2.COLOR_RGB2GRAY)
-    inv5=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\5_on_inv.png'),cv2.COLOR_RGB2GRAY)
-    inv6=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\6_on_inv.png'),cv2.COLOR_RGB2GRAY)
-    inv7=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\7_on_inv.png'),cv2.COLOR_RGB2GRAY)
-    inv8=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\8_on_inv.png'),cv2.COLOR_RGB2GRAY)
-    inv9=cv2.cvtColor(cv2.imread('C:\\Users\\aephraim\\Desktop\\Idelon_eyes\\Templates\\9_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv0=cv2.cvtColor(cv2.imread('./Templates/0_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv1=cv2.cvtColor(cv2.imread('./Templates/1_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv2=cv2.cvtColor(cv2.imread('./Templates/2_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv3=cv2.cvtColor(cv2.imread('./Templates/3_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv4=cv2.cvtColor(cv2.imread('./Templates/4_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv5=cv2.cvtColor(cv2.imread('./Templates/5_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv6=cv2.cvtColor(cv2.imread('./Templates/6_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv7=cv2.cvtColor(cv2.imread('./Templates/7_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv8=cv2.cvtColor(cv2.imread('./Templates/8_on_inv.png'),cv2.COLOR_RGB2GRAY)
+    inv9=cv2.cvtColor(cv2.imread('./Templates/9_on_inv.png'),cv2.COLOR_RGB2GRAY)
 
 else:
     print('You will likely need to take screan shoots of the numbers on your screen resoltion')
@@ -156,5 +156,5 @@ def read_region(where,what):
             read_numbers(region)
 
 
-
-read_region('W Charge Rate')
+if __name__ == "__main__":
+    read_region('W Charge Rate')
