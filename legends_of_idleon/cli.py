@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 import time
 
 COUNTDOWN_SECONDS = 5
@@ -11,6 +12,14 @@ COUNTDOWN_SECONDS = 5
 def _countdown(seconds=COUNTDOWN_SECONDS):
     print(f"Switch to the game window. Starting in {seconds} seconds...")
     time.sleep(seconds)
+
+
+def _enable_dpi_awareness():
+    """Make pixel coordinates match the real screen on scaled (HiDPI) Windows displays."""
+    if sys.platform == "win32":
+        import ctypes
+
+        ctypes.windll.user32.SetProcessDPIAware()
 
 
 def build_parser():
@@ -34,11 +43,19 @@ def build_parser():
     worship.add_argument("what", choices=["charge-rate", "cur-charge"])
 
     sub.add_parser("tree-bot", help="experimental timing bot (unfinished)")
+
+    stack = sub.add_parser("stack", help="screenshot/template tools for the automation stack")
+    stack.add_argument("rest", nargs=argparse.REMAINDER, help="see `stack --help`")
     return parser
 
 
 def main(argv=None):
     args = build_parser().parse_args(argv)
+    _enable_dpi_awareness()
+    if args.command == "stack":
+        from .stack.devtools import main as stack_main
+
+        return stack_main(args.rest)
     if not args.no_countdown:
         _countdown()
 

@@ -23,10 +23,10 @@ dev = ["pytest", "ruff"]
 idleon = "legends_of_idleon.cli:main"
 
 [tool.setuptools]
-packages = ["legends_of_idleon", "legends_of_idleon.tasks"]
+packages = ["legends_of_idleon", "legends_of_idleon.tasks", "legends_of_idleon.stack", "legends_of_idleon.stack.flows"]
 
 [tool.setuptools.package-data]
-legends_of_idleon = ["templates/*.png", "templates/*/*.png"]
+legends_of_idleon = ["templates/*.png", "templates/*/*.png", "templates/*/*.json"]
 
 [tool.ruff]
 line-length = 100

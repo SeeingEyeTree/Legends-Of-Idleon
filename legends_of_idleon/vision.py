@@ -64,3 +64,18 @@ def color_find(image, lower, upper):
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower, upper)
     return cv2.bitwise_and(image, image, mask=mask)
+
+
+def find_color_blobs(image, lower, upper, min_area=50):
+    """Find solid regions of a colour (HSV range) in a BGR image.
+
+    Returns ``[(x, y, w, h, area), ...]`` for every connected blob of at least
+    ``min_area`` pixels, largest first. Useful for buttons that are a known
+    colour and don't need a template.
+    """
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    mask = cv2.inRange(hsv, np.array(lower), np.array(upper))
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+    count, _, stats, _ = cv2.connectedComponentsWithStats(mask)
+    blobs = [tuple(int(v) for v in stats[i]) for i in range(1, count) if stats[i][4] >= min_area]
+    return sorted(blobs, key=lambda b: b[4], reverse=True)
