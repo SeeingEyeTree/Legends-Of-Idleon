@@ -80,3 +80,29 @@ def select_inventory_slot(index):
     tab_x, tab_y = _INVENTORY_TABS[page]
     click(tab_x, tab_y, delay=0)
     move_to(1780 + (slot % 4) * 200, 520 + (slot // 4) * 200)
+
+
+_SHIFT = keys.LSHIFT
+_PUNCTUATION = {" ": keys.SPACE, "-": keys.MINUS, "=": keys.EQUALS}
+
+
+def _scan_code(char):
+    """Return ``(scan_code, needs_shift)`` for a typeable character."""
+    if char.isdigit():
+        return keys.DIGITS[char], False
+    if char.isascii() and char.isalpha():
+        return getattr(keys, char.upper()), char.isupper()
+    if char in _PUNCTUATION:
+        return _PUNCTUATION[char], False
+    raise ValueError(f"cannot type character {char!r}")
+
+
+def type_text(text, delay=0.05):
+    """Type letters, digits, spaces and ``-``/``=`` using hardware scan codes."""
+    for char in text:
+        code, shifted = _scan_code(char)
+        if shifted:
+            keys.press_key(_SHIFT)
+        press(code, delay=delay)
+        if shifted:
+            keys.release_key(_SHIFT)

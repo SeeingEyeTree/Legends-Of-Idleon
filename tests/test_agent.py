@@ -26,6 +26,7 @@ def _setup(tmp_path):
         click=lambda x, y: log.append(("click", x, y)),
         move=lambda x, y: log.append(("move", x, y)),
         press=lambda k: log.append(("key", k)),
+        type_text=lambda t: log.append(("type", t)),
         template_dir=templates,
     )
     return bridge, ctx, log
@@ -71,3 +72,11 @@ def test_run_agent_once(tmp_path):
     _job(bridge, "p", op="ping")
     assert run_agent(bridge, ctx=ctx, once=True) == 1
     assert _result(bridge, "p")["ok"]
+
+
+def test_type_op(tmp_path):
+    bridge, ctx, log = _setup(tmp_path)
+    _job(bridge, "t", op="type", text="TreeBot")
+    process_pending(bridge, ctx)
+    assert log == [("type", "TreeBot")]
+    assert _result(bridge, "t")["data"] == {"typed": 7}

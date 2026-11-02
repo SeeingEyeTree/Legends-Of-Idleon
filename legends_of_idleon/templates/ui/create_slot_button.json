@@ -1,0 +1,10 @@
+{
+  "threshold": 0.9,
+  "color": false,
+  "region": [
+    16,
+    586,
+    316,
+    806
+  ]
+}

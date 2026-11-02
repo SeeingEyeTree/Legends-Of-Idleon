@@ -34,12 +34,20 @@ class Context:
     """
 
     def __init__(
-        self, run_dir=None, grab=None, click=None, press=None, template_dir=None, move=None
+        self,
+        run_dir=None,
+        grab=None,
+        click=None,
+        press=None,
+        template_dir=None,
+        move=None,
+        type_text=None,
     ):
         self._grab = grab
         self._click = click
         self._press = press
         self._move = move
+        self._type = type_text
         self.template_dir = template_dir
         self._templates = {}
         base = Path(run_dir) if run_dir else Path("runs") / time.strftime("%Y%m%d-%H%M%S")
@@ -88,6 +96,14 @@ class Context:
             move_to(x, y, reference=ui.REFERENCE)
         else:
             self._move(x, y)
+
+    def type_text(self, text):
+        if self._type is None:
+            from ..controls import type_text
+
+            type_text(text)
+        else:
+            self._type(text)
 
     def press(self, key):
         if self._press is None:

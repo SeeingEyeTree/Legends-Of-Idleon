@@ -35,3 +35,16 @@ def test_match_template_returns_arrays():
     scene, needle = _scene()
     ys, xs = match_template(scene, needle, 0.99)
     assert list(ys) == [20] and list(xs) == [30]
+
+
+def test_scan_code_mapping(monkeypatch):
+    from unittest.mock import MagicMock
+
+    monkeypatch.setitem(__import__("sys").modules, "pyautogui", MagicMock())
+    from legends_of_idleon import keys
+    from legends_of_idleon.controls import _scan_code
+
+    assert _scan_code("T") == (keys.T, True)
+    assert _scan_code("t") == (keys.T, False)
+    assert _scan_code("7") == (keys.SEVEN, False)
+    assert _scan_code(" ") == (keys.SPACE, False)

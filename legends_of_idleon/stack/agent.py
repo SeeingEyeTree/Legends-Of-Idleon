@@ -16,6 +16,7 @@ Job format::
     {"op": "snap", "name": "menu.png", "box": [x1, y1, x2, y2]}
     {"op": "click", "x": 960, "y": 540}
     {"op": "key", "key": "ESCAPE"}
+    {"op": "type", "text": "TreeBot"}
     {"op": "find", "template": "create_button"}
 
 Coordinates are in 1920x1080 reference pixels.
@@ -80,6 +81,14 @@ def op_key(job, ctx, bridge):
     return {}
 
 
+def op_type(job, ctx, bridge):
+    text = str(job["text"])
+    if len(text) > 100:
+        raise ValueError("text too long (max 100 characters)")
+    ctx.type_text(text)
+    return {"typed": len(text)}
+
+
 def op_find(job, ctx, bridge):
     template = ctx.template(job["template"])
     best = ui.score(ctx.capture(), template)
@@ -105,6 +114,7 @@ OPS = {
     "click": op_click,
     "move": op_move,
     "key": op_key,
+    "type": op_type,
     "find": op_find,
     "sleep": op_sleep,
 }
