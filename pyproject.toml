@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "legends-of-idleon"
+version = "0.1.0"
+description = "Quality-of-life automation for Legends of Idleon"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "opencv-python",
+    "pyautogui",
+    "Pillow",
+    "pywin32; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[project.scripts]
+idleon = "legends_of_idleon.cli:main"
+
+[tool.setuptools]
+packages = ["legends_of_idleon", "legends_of_idleon.tasks"]
+
+[tool.setuptools.package-data]
+legends_of_idleon = ["templates/*.png", "templates/*/*.png"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
