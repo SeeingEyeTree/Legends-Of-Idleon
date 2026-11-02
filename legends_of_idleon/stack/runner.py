@@ -33,10 +33,13 @@ class Context:
     a display; by default they use the real Windows implementations.
     """
 
-    def __init__(self, run_dir=None, grab=None, click=None, press=None, template_dir=None):
+    def __init__(
+        self, run_dir=None, grab=None, click=None, press=None, template_dir=None, move=None
+    ):
         self._grab = grab
         self._click = click
         self._press = press
+        self._move = move
         self.template_dir = template_dir
         self._templates = {}
         base = Path(run_dir) if run_dir else Path("runs") / time.strftime("%Y%m%d-%H%M%S")
@@ -76,6 +79,15 @@ class Context:
             click(x, y, reference=ui.REFERENCE)
         else:
             self._click(x, y)
+
+    def move(self, x, y):
+        """Move the mouse to a point given in reference (1920x1080) coordinates."""
+        if self._move is None:
+            from ..controls import move_to
+
+            move_to(x, y, reference=ui.REFERENCE)
+        else:
+            self._move(x, y)
 
     def press(self, key):
         if self._press is None:

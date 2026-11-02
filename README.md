@@ -41,6 +41,32 @@ python -m legends_of_idleon vials 10
 
 (`idleon cook 3` also works after `pip install -e .`.) Use `--no-countdown` to skip the wait.
 
+## Automation stack (screenshot-driven)
+
+`legends_of_idleon/stack/` runs game flows as verified steps: act, look at the screen, confirm the
+expected template appeared, retry if not. Templates live in `legends_of_idleon/templates/ui/`.
+
+Tools for building templates:
+
+```
+python -m legends_of_idleon stack snap shot.png                      # 1920x1080 screenshot
+python -m legends_of_idleon stack crop shot.png play_button 800 600 1100 680
+python -m legends_of_idleon stack find shot.png play_button          # score a template
+```
+
+### Remote testing agent
+
+To drive the game from another machine (or a Claude session) without giving it a shell, run the
+agent on the game PC and share a folder:
+
+```
+python -m legends_of_idleon agent C:\dev\Legends-Of-Idleon\bridge
+```
+
+It only understands `ping`, `snap`, `click`, `move`, `key`, `find` and `sleep` jobs dropped in
+`bridge/jobs/*.json`; results and screenshots appear in `bridge/results/` and `bridge/out/`.
+Stop it with Ctrl+C.
+
 ## Screen resolution
 
 Click coordinates were recorded on a **2560x1600** display and are scaled to your screen size, but

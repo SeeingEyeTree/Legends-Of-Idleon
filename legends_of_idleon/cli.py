@@ -42,6 +42,9 @@ def build_parser():
     worship = sub.add_parser("read-worship", help="read a number from the Worship screen")
     worship.add_argument("what", choices=["charge-rate", "cur-charge"])
 
+    agent = sub.add_parser("agent", help="watch a folder for jobs from a remote operator")
+    agent.add_argument("bridge", help="folder shared with the operator (creates jobs/, results/)")
+
     sub.add_parser("tree-bot", help="experimental timing bot (unfinished)")
 
     stack = sub.add_parser("stack", help="screenshot/template tools for the automation stack")
@@ -56,6 +59,10 @@ def main(argv=None):
         from .stack.devtools import main as stack_main
 
         return stack_main(args.rest)
+    if args.command == "agent":
+        from .stack.agent import run_agent
+
+        return run_agent(args.bridge)
     if not args.no_countdown:
         _countdown()
 
